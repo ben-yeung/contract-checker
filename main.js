@@ -1,20 +1,24 @@
-var Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/b095ad0962044db693c1a9fb711b0e57"));
-var version = web3.version.api;
 const request = require('request');
 const fetch = require('node-fetch')
 const secrets = require('./secrets.json');
+var Web3 = require('web3');
+var web3 = new Web3(new Web3.providers.HttpProvider(secrets.INFURA_PROVIDER));
+var version = web3.version.api;
 
-contractAddress = "0x86C10D10ECa1Fca9DAF87a279ABCcabe0063F247";
-contractName = "Cool Pets";
-variable = "_publicMintStatus";
+var contractName = "Cool Pets";
+var contractAddress = "0x86C10D10ECa1Fca9DAF87a279ABCcabe0063F247";
+var methodVar = "_publicMintStatus()";
 
-counter = 0;
+var lastValue = NULL;
+var counter = 0;
 
 function target(input) {
-    return input != 0;
+    if (input != lastValue) {
+        lastValue = input
+        return input != 3;
+    } 
+    return false
 }
-
 
 ether_key = secrets.ETHER_API_KEY;
 webhook = secrets.WEBHOOK;
@@ -33,24 +37,16 @@ async function getContractData() {
 
             var contract = new web3.eth.Contract(contractAbiJSON, contractAddress);
     
-            // contract.getPastEvents('allEvents', {
-            //     fromBlock: 14173871,
-            //     toBlock: 14173881
-            // }, 
-            // function(error, events) {
-            //     console.log(events)
-            // })
-    
-            contract.methods._publicMintStatus().call().then((data) => {
+            contract.methods[methodVar]().call().then((data) => {
     
                 console.log("(" + counter + ") " + "Checking data: " + data)
                 counter += 1
     
-                if (data != 0) {
-                    formattedData = "**_publicMintStatus:** " + data;
+                if (target(data)) {
+                    formattedData = "**Original:**: " + lastValue + "\n**New Value:** " + data;
     
                     embed = {
-                        "title":"**Cool Pets** Variable Change Detected",
+                        "title":"**" + contractName + "** " + methodVar + " Change Detected",
                         "color":240116,
                         "description":formattedData
                     }
