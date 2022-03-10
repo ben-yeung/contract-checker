@@ -5,17 +5,19 @@ var Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider(secrets.INFURA_PROVIDER));
 var version = web3.version.api;
 
-var contractName = "Cool Pets";
-var contractAddress = "0x86C10D10ECa1Fca9DAF87a279ABCcabe0063F247";
-var methodVar = "_publicMintStatus()";
+var contractName = "Bibiz";
+var contractAddress = "0x06D16D05daEc5C792622cef8c631e9352bb32A78";
+var etherscan = "https://etherscan.io/address/0x00abdb2fbbc763b6b4a8700e10550ad74dac4d43#writeProxyContract"
+var methodVar = "saleActive";
+const targetVal = true
 
-var lastValue = NULL;
+var lastValue = undefined;
 var counter = 0;
 
 function target(input) {
     if (input != lastValue) {
         lastValue = input
-        return input != 3;
+        return input == targetVal;
     } 
     return false
 }
@@ -43,7 +45,7 @@ async function getContractData() {
                 counter += 1
     
                 if (target(data)) {
-                    formattedData = "**Original:**: " + lastValue + "\n**New Value:** " + data;
+                    formattedData = "**Original:**: " + lastValue + "\n**New Value:** " + data + "\n" +  etherscan;
     
                     embed = {
                         "title":"**" + contractName + "** " + methodVar + " Change Detected",
