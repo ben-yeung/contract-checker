@@ -8,5 +8,6 @@ Basic [Etherscan API](https://etherscan.io/apis) implementation to monitor a sma
 ## Floor Monitor
 
 Using [OpenSea API](https://docs.opensea.io/reference/api-overview) create monitors for specific collections tracking floor price.
-- Send a discord webhook when floor price reaches a target price (below or above).
+- Send a Discord webhook when floor price reaches a target price (below or above).
+- Discord webhook includes links leading to the collection's OpenSea, EtherScan, external website, Twitter page, and Discord if applicable. OpenSea royalties are also included as an added statistic when monitoring collections.
 - Limited by OpenSea API rate limits without a key.
