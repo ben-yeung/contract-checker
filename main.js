@@ -1,13 +1,13 @@
 const request = require('request');
 const fetch = require('node-fetch')
-const secrets = require('./secrets.json');
+const secrets = require('./secrets.json'); // Needs Infura endpoint, Etherscan API Key, and Webhook
 var Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider(secrets.INFURA_PROVIDER));
 var version = web3.version.api;
 
-var contractName = "Bibiz";
+var contractName = "Bibiz"
 var contractAddress = "0x06D16D05daEc5C792622cef8c631e9352bb32A78";
-var etherscan = "https://etherscan.io/address/0x00abdb2fbbc763b6b4a8700e10550ad74dac4d43#writeProxyContract"
+var etherscan = "https://etherscan.io/address/" + contractAddress + "#writeProxyContract"
 var methodVar = "saleActive";
 const targetVal = true
 
@@ -75,5 +75,5 @@ async function getContractData() {
         
     })
 }
-// getContractData()
-setInterval(() => getContractData(), 1500);
+getContractData()
+// setInterval(() => getContractData(), 1500);
