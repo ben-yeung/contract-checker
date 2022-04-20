@@ -6,25 +6,21 @@ import time
 with open(os.path.join('secrets.json'), mode='r') as f:
     secrets = json.loads(f.read())
 
-personal = secrets['WEBHOOK']
+personal = secrets['WEBHOOK'] # Put custom webhook here
 
 # slug string (collection name in link): [checkAbovePrice, price, webhook]
 pages = { 
     "duck-frens":[True, 0.1, personal],
-    "drp-shintaro":[True, 0.15, personal]
+    "drp-shintaro":[True, 0.15, personal],
+    "space-boo-official-nft":[True, 0.09, personal],
+    "uwucrew":[True, 0.3, personal]
 }
-last_price = {}
-interval = 180
+interval = 120
 
 if __name__ == "__main__":
 
     while True:
         for key, val in pages.items():
-            
-            if key not in last_price and val[0]:
-                last_price[key] = 0
-            elif key not in last_price and not val[0]:
-                last_price[key] = 10000
 
             target_floor = val[1]
 
@@ -58,7 +54,7 @@ if __name__ == "__main__":
                     if (data['twitter_username']):
                         links += " • [Twitter](https://twitter.com/{})".format(data['twitter_username'])
 
-                    if val[0] and curr_floor >= target_floor and last_price[key] < curr_floor:
+                    if val[0] and curr_floor > target_floor:
                         embed = {
                             "title":"{} reached {}Ξ Floor".format(project_title, curr_floor),
                             "description":"**Target:** Above {}Ξ\n\n".format(target_floor) + links,
@@ -78,7 +74,7 @@ if __name__ == "__main__":
                         url = val[2]
                         res = requests.post(url, json=data)
 
-                    elif not val[0] and curr_floor <= target_floor and last_price[key] > curr_floor:
+                    elif not val[0] and curr_floor < target_floor:
                         embed = {
                             "title":"{} reached {}Ξ Floor".format(project_title, curr_floor),
                             "description":"**Target:** Below {}Ξ\n\n".format(target_floor) + links,
@@ -98,7 +94,10 @@ if __name__ == "__main__":
                         url = val[2]
                         res = requests.post(url, json=data)
 
-                    last_price[key] = curr_floor
+                    if not val[0]:
+                        pages[key][1] = min(curr_floor, target_floor)
+                    else:
+                        pages[key][1] = max(curr_floor, target_floor)
 
                 else:
                     print("ERROR calling API (Rate limit)")
