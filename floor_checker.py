@@ -12,7 +12,7 @@ personal = secrets['WEBHOOK'] # Put custom webhook here
 pages = { 
     "duck-frens":[True, 0.1, personal],
     "drp-shintaro":[True, 0.15, personal],
-    "space-boo-official-nft":[True, 0.09, personal],
+    "space-boo-official-nft":[True, 0.11, personal],
     "uwucrew":[True, 0.3, personal]
 }
 interval = 120

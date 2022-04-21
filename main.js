@@ -5,11 +5,11 @@ var Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider(secrets.INFURA_PROVIDER));
 var version = web3.version.api;
 
-var contractName = "Bibiz"
-var contractAddress = "0x06D16D05daEc5C792622cef8c631e9352bb32A78";
+var contractName = "Avius Animae"
+var contractAddress = "0x0eDA3c383F13C36db1c96bD9c56f715B09b9E350";
 var etherscan = "https://etherscan.io/address/" + contractAddress + "#writeProxyContract"
-var methodVar = "saleActive";
-const targetVal = true
+var methodVar = "totalSupply";
+const targetVal = 5000
 
 var lastValue = undefined;
 var counter = 0;
@@ -17,7 +17,7 @@ var counter = 0;
 function target(input) {
     if (input != lastValue) {
         lastValue = input
-        return input == targetVal;
+        return input >= targetVal;
     } 
     return false
 }
@@ -75,5 +75,5 @@ async function getContractData() {
         
     })
 }
-getContractData()
-// setInterval(() => getContractData(), 1500);
+// getContractData()
+setInterval(() => getContractData(), 5000);
