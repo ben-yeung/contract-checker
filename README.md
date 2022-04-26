@@ -11,4 +11,4 @@
 - Send a Discord webhook when floor price reaches a target price (below or above).
 - Discord webhook includes links leading to the collection's OpenSea, EtherScan, external website, Twitter page, and Discord if applicable. OpenSea royalties are also included as an added statistic when monitoring collections.
 - Limited by OpenSea API rate limits without a key.
-- Built in python as a proof of concept. See my other project [OS-discord-bot](https://github.com/ben-yeung/OS-floor-bot) to see a Js implemenation.
+- Built in python as a proof of concept. See my other project [OS-discord-bot](https://github.com/ben-yeung/OS-floor-bot) to see a Js implementation.
